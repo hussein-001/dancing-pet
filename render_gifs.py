@@ -1,7 +1,8 @@
 """Render README showcase GIFs from the mod's own frame data.
 
 usage: python render_gifs.py <repo folder>
-Writes <repo>/assets/hero.gif and <repo>/assets/pets/<Word>.gif
+Writes <repo>/assets/hero.gif, <repo>/assets/pets/<Word>.gif and the
+plugin icon <repo>/.claude-plugin/icon.png
 """
 import json
 import os
@@ -122,6 +123,25 @@ def hero(words, seconds_each=1.6):
     save(frames, os.path.join(OUT, 'hero.gif'), STICKERS[words[0]]['d'])
 
 
+def icon(word='Sock-hopping', frame=0, size=1024, fill=0.72):
+    """The listing icon: one pose, cropped to its pixels, centered on the dark tile."""
+    sticker = STICKERS[word]
+    pixels = sticker['f'][frame]
+    lit = [divmod(i, W) for i, ch in enumerate(pixels) if KEYS.index(ch) > 0]
+    r0, r1 = min(r for r, _ in lit), max(r for r, _ in lit)
+    c0, c1 = min(c for _, c in lit), max(c for _, c in lit)
+    cols, rows = c1 - c0 + 1, r1 - r0 + 1
+    px = int(size * fill / max(cols, rows))
+    x0 = (size - cols * px) // 2 - c0 * px
+    y0 = (size - rows * px) // 2 - r0 * px
+    im = Image.new('RGB', (size, size), BG)
+    draw_pet(ImageDraw.Draw(im), sticker, frame, x0, y0, px)
+    path = os.path.join(REPO, '.claude-plugin', 'icon.png')
+    im.save(path, optimize=True)
+    print(path, im.size, os.path.getsize(path) // 1024, 'KB')
+
+
+icon()
 hero(['Baking', 'Jitterbugging', 'Whirlpooling', 'Sock-hopping'])
 for w in ['Beboppin', 'Boogieing', 'Julienning', 'Kneading', 'Moonwalking', 'Noodling',
           'Pondering', 'Spinning', 'Whisking']:
