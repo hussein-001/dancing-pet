@@ -1,0 +1,10 @@
+{
+  "name": "dancing-pet",
+  "version": "0.1.0",
+  "description": "A pixel Claude pet dances above the prompt while Claude is working, acting out the spinner word",
+  "author": {
+    "name": "hussein-001"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/hussein-001/dancing-pet"
+}

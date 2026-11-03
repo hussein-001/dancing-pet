@@ -1,0 +1,13 @@
+{
+  "name": "dancing-pet",
+  "owner": {
+    "name": "hussein-001"
+  },
+  "description": "A pixel Claude pet that dances above the prompt while Claude works",
+  "plugins": [
+    {
+      "name": "dancing-pet",
+      "source": "./"
+    }
+  ]
+}
