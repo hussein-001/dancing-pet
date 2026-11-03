@@ -69,7 +69,12 @@ function cells(sticker: Sticker, frame: number): string {
   return base64(new Uint8Array(words.buffer))
 }
 
+const ON_WORDS = new Set(['on', 'show', 'enable'])
+const OFF_WORDS = new Set(['off', 'hide', 'disable'])
+
 export const register: Register = on => {
+  // On or off, kept in $.store so the choice outlives the session.
+  let isEnabled = true
   let bandId: string | null = null
   // Render hooks are pure, so the spinner's word is kept here, not in $.state.
   let word: string | null = null
@@ -82,11 +87,37 @@ export const register: Register = on => {
     timer = null
   }
 
+  on('session.start', async ($, e, next) => {
+    isEnabled = (await $.store.get('enabled')) !== false
+    await $.command.register({
+      name: 'pet',
+      description: 'Turn the dancing pet on or off',
+      argumentHint: '[on|off]',
+      immediate: true,
+    })
+    return next(e)
+  })
+
+  on('command.run', { command: 'pet' }, async ($, e) => {
+    const arg = e.args.trim().toLowerCase()
+    if (arg !== '' && !ON_WORDS.has(arg) && !OFF_WORDS.has(arg)) {
+      return { text: 'Usage: /pet [on|off]. With no argument, /pet switches the pet on or off.' }
+    }
+    isEnabled = arg === '' ? !isEnabled : ON_WORDS.has(arg)
+    await $.store.set('enabled', isEnabled)
+    $.ui.invalidate('ui.render')
+    return {
+      text: isEnabled
+        ? 'Dancing pet on: it dances above the prompt while Claude works.'
+        : 'Dancing pet off. Run /pet to bring it back.',
+    }
+  })
+
   on('turn.start', ($, e, next) => {
     if (e.agentId === undefined && timer === null) {
       frame = 0
       timer = $.clock.every(stickerFor(word).d, () => {
-        if (bandId === null) return
+        if (bandId === null || !isEnabled) return
         // The label is text, not cells: redraw the band when the word changed.
         if (word !== drawnWord) $.ui.invalidate('ui.render')
         frame += 1
@@ -107,7 +138,7 @@ export const register: Register = on => {
   })
 
   on('ui.render', { component: 'AbovePrompt' }, ($, e, next) => {
-    if (e.surface !== 'terminal' || !e.props.isWorking || e.props.hasSurvey) {
+    if (!isEnabled || e.surface !== 'terminal' || !e.props.isWorking || e.props.hasSurvey) {
       bandId = null
       return next(e)
     }

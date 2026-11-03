@@ -6,6 +6,13 @@ All notable changes to dancing-pet are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-03
+
+### Added
+
+- `/pet` slash command to turn the pet off and on. `/pet` switches it, `/pet on` and `/pet off` set it.
+  It works mid-response too, and the choice is remembered in later sessions.
+
 ## [0.1.0] - 2026-11-03
 
 ### Added
@@ -16,5 +23,6 @@ All notable changes to dancing-pet are listed here. The format follows
 - `convert.py` to rebuild the frames from a folder of GIF stickers.
 - An animated showcase in the README, rendered by `render_gifs.py`.
 
-[Unreleased]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.1.0...HEAD
+[Unreleased]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.0...HEAD
+[0.2.0]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.1.0...dancing-pet--v0.2.0
 [0.1.0]: https://github.com/hussein-001/dancing-pet/releases/tag/dancing-pet--v0.1.0
