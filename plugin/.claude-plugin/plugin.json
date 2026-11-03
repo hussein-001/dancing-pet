@@ -1,10 +1,22 @@
 {
   "name": "dancing-pet",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A pixel Claude pet dances above the prompt while Claude is working, acting out the spinner word",
   "author": {
     "name": "hussein-001"
   },
   "license": "MIT",
-  "repository": "https://github.com/hussein-001/dancing-pet"
+  "repository": "https://github.com/hussein-001/dancing-pet",
+  "homepage": "https://github.com/hussein-001/dancing-pet",
+  "documentationUrl": "https://github.com/hussein-001/dancing-pet#readme",
+  "supportUrl": "https://github.com/hussein-001/dancing-pet/issues",
+  "privacyPolicyUrl": "https://github.com/hussein-001/dancing-pet#privacy",
+  "keywords": [
+    "pet",
+    "animation",
+    "spinner",
+    "pixel-art",
+    "fun",
+    "mod"
+  ]
 }

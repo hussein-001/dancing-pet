@@ -104,6 +104,18 @@ Versions follow [Semantic Versioning](https://semver.org/): a patch (0.1.1) for 
    With GitHub Desktop, create the tag there instead (right-click the commit, Create Tag…), since Desktop only pushes tags it made itself.
 4. Push the commit and the tag. The [Release workflow](.github/workflows/release.yml) checks that the tag matches `plugin.json`, then publishes a GitHub release with that version's changelog section as its notes.
 
+## Privacy
+
+dancing-pet collects no personal data and sends nothing anywhere.
+
+- **No network.** The mod makes no network requests: no analytics, no telemetry, no update checks of its own.
+- **No files.** It reads and writes no files in your projects or anywhere else on your machine.
+- **What it reads.** Only the spinner word Claude Code is showing (like `Baking`), to pick the pet's pose. It is kept in memory while Claude Code runs and never stored or sent.
+- **What it stores.** One setting, whether the pet is on or off, in Claude Code's storage for this plugin on your own machine. `/pet on` and `/pet off` change it.
+- **No access to your conversation.** It does not read your prompts, Claude's replies, your code or any credentials.
+
+Questions about privacy go to the [issue tracker](https://github.com/hussein-001/dancing-pet/issues).
+
 ## Notes
 
 The pet artwork is a fan-made pixel version of the Claude Code mascot. This is not an official Anthropic project.

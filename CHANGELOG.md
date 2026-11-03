@@ -6,6 +6,15 @@ All notable changes to dancing-pet are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-11-03
+
+### Added
+
+- A Privacy section in the README: the mod collects no personal data, sends nothing, reads and writes no files,
+  and stores only the on/off setting on your machine.
+- Listing links in `plugin.json` for the plugin directory: `privacyPolicyUrl`, `supportUrl`, `homepage`,
+  `documentationUrl`, and `keywords` for search.
+
 ## [0.2.2] - 2026-11-03
 
 ### Changed
@@ -43,7 +52,8 @@ All notable changes to dancing-pet are listed here. The format follows
 - `convert.py` to rebuild the frames from a folder of GIF stickers.
 - An animated showcase in the README, rendered by `render_gifs.py`.
 
-[Unreleased]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.2...HEAD
+[Unreleased]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.3...HEAD
+[0.2.3]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.2...dancing-pet--v0.2.3
 [0.2.2]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.1...dancing-pet--v0.2.2
 [0.2.1]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.0...dancing-pet--v0.2.1
 [0.2.0]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.1.0...dancing-pet--v0.2.0
