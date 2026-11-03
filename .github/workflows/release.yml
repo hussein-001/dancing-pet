@@ -1,7 +1,7 @@
 name: Release
 
 # Runs when a release tag is pushed. Tags are made by `claude plugin tag`,
-# named dancing-pet--v<version> after the version in .claude-plugin/plugin.json.
+# named dancing-pet--v<version> after the version in plugin/.claude-plugin/plugin.json.
 on:
   push:
     tags:
@@ -20,7 +20,7 @@ jobs:
         id: version
         run: |
           tag_version="${GITHUB_REF_NAME##*--v}"
-          manifest_version="$(jq -r .version .claude-plugin/plugin.json)"
+          manifest_version="$(jq -r .version plugin/.claude-plugin/plugin.json)"
           if [ "$tag_version" != "$manifest_version" ]; then
             echo "::error::Tag $GITHUB_REF_NAME does not match plugin.json version $manifest_version"
             exit 1

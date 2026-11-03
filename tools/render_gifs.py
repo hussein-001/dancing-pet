@@ -1,8 +1,8 @@
 """Render README showcase GIFs from the mod's own frame data.
 
-usage: python render_gifs.py <repo folder>
-Writes <repo>/assets/hero.gif, <repo>/assets/pets/<Word>.gif and the
-plugin icon <repo>/.claude-plugin/icon.png
+usage: python tools/render_gifs.py <repo folder>
+Writes the README GIFs under <repo>/assets and the plugin icon at
+<repo>/plugin/.claude-plugin/icon.png
 """
 import json
 import os
@@ -12,17 +12,33 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 
 REPO = sys.argv[1]
-HOOKS = os.path.join(REPO, 'hooks')
+HOOKS = os.path.join(REPO, 'plugin', 'hooks')
 OUT = os.path.join(REPO, 'assets')
 
 index = open(os.path.join(HOOKS, 'stickers.ts')).read()
 W = int(re.search(r'WIDTH = (\d+)', index)[1])
 H = int(re.search(r'HEIGHT = (\d+)', index)[1])
 KEYS = re.search(r"KEYS = '(.*)'", index)[1]
+
+
+def load_part(path):
+    """Read one frames file: a TypeScript object literal, made JSON here."""
+    body = open(path).read().split('= {', 1)[1]
+    body = '{' + body
+    body = re.sub(r'^\s*//.*$', '', body, flags=re.M)
+    body = body.replace("'", '"')
+    body = re.sub(r'(\s)([dpf]):', r'\1"\2":', body)
+    body = re.sub(r'0x([0-9a-f]{6})', lambda m: str(int(m[1], 16)), body)
+    body = re.sub(r',(\s*[\]}])', r'\1', body)
+    part = json.loads(body)
+    for sticker in part.values():
+        sticker['f'] = [''.join(rows) for rows in sticker['f']]
+    return part
+
+
 STICKERS = {}
-for n in (1, 2, 3):
-    src = open(os.path.join(HOOKS, f'stickers-{n}.ts')).read()
-    STICKERS.update(json.loads(src.split('= ', 1)[1]))
+for path in sorted(os.listdir(os.path.join(HOOKS, 'frames'))):
+    STICKERS.update(load_part(os.path.join(HOOKS, 'frames', path)))
 
 MENLO = '/System/Library/Fonts/Menlo.ttc'
 BG = (24, 24, 27)
@@ -136,7 +152,7 @@ def icon(word='Sock-hopping', frame=0, size=1024, fill=0.72):
     y0 = (size - rows * px) // 2 - r0 * px
     im = Image.new('RGB', (size, size), BG)
     draw_pet(ImageDraw.Draw(im), sticker, frame, x0, y0, px)
-    path = os.path.join(REPO, '.claude-plugin', 'icon.png')
+    path = os.path.join(REPO, 'plugin', '.claude-plugin', 'icon.png')
     im.save(path, optimize=True)
     print(path, im.size, os.path.getsize(path) // 1024, 'KB')
 

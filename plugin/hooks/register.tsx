@@ -14,7 +14,7 @@ const plain = (text: string) =>
   text.normalize('NFD').replace(/[^A-Za-z]/g, '').toLowerCase()
 
 const BY_PLAIN = new Map(NAMES.map(name => [plain(name), name]))
-const FALLBACK: Sticker = { p: [], f: [''], d: 90 }
+const FALLBACK: Sticker = { d: 90, p: [], f: [[]] }
 
 const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
 
@@ -46,7 +46,7 @@ function stickerFor(spinnerWord: string | null): Sticker {
 
 // Two pixel rows per terminal row, drawn as half blocks.
 function cells(sticker: Sticker, frame: number): string {
-  const pixels = sticker.f[frame % sticker.f.length] ?? ''
+  const pixels = (sticker.f[frame % sticker.f.length] ?? []).join('')
   const color = (i: number): number | null => {
     const k = KEYS.indexOf(pixels.charAt(i))
     return k <= 0 ? null : (sticker.p[k - 1] ?? null)

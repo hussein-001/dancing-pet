@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "dancing-pet",
-      "source": "./"
+      "source": "./plugin"
     }
   ]
 }

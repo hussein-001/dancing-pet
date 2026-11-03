@@ -6,6 +6,19 @@ All notable changes to dancing-pet are listed here. The format follows
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-03
+
+### Changed
+
+- The animation frames are now readable source: one pixel row per line, in eleven files under 200 KB each,
+  so the plugin directory can review them in full. The pixels are unchanged.
+- The mod now lives in its own `plugin/` folder, and the build scripts moved to `tools/`.
+  The install line is unchanged.
+
+### Added
+
+- A README section describing each hook the mod registers and what it does.
+
 ## [0.2.1] - 2026-11-03
 
 ### Added
@@ -30,7 +43,8 @@ All notable changes to dancing-pet are listed here. The format follows
 - `convert.py` to rebuild the frames from a folder of GIF stickers.
 - An animated showcase in the README, rendered by `render_gifs.py`.
 
-[Unreleased]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.1...HEAD
+[Unreleased]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.2...HEAD
+[0.2.2]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.1...dancing-pet--v0.2.2
 [0.2.1]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.2.0...dancing-pet--v0.2.1
 [0.2.0]: https://github.com/hussein-001/dancing-pet/compare/dancing-pet--v0.1.0...dancing-pet--v0.2.0
 [0.1.0]: https://github.com/hussein-001/dancing-pet/releases/tag/dancing-pet--v0.1.0
